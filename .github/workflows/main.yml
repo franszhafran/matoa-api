@@ -24,4 +24,4 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Username
-        run: echo $GITHUB_CONTEXT
+        run: echo "Comment on PR #${{ GITHUB_CONTEXT }}"
