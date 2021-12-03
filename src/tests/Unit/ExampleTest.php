@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Models\Cart;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
@@ -12,7 +15,7 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function test_example()
-    {
+    {   
         $this->assertTrue(true);
     }
 }
