@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth0Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/{id}', [ProductController::class, 'detail'])->name('detail');
         Route::post('/', [ProductController::class, 'store'])->name('store');
     });
+});
+
+Route::prefix('auth0')->name('auth0.')->group(function () {
+    Route::get('callback', [Auth0Controller::class, 'callback'])->name('callback');
+    Route::get('login', [Auth0Controller::class, 'login'])->name('login');
+    Route::get('logout', [Auth0Controller::class, 'logout'])->name('logout');
+    Route::get('info', [Auth0Controller::class, 'info'])->name('info')->middleware('auth0');;
 });
