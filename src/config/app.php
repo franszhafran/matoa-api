@@ -30,6 +30,8 @@ return [
 
     'frontend_url' => env('APP_FE_URL', 'http://localhost:3000/auth'),
 
+    'auth_key' => env('APP_AUTH_KEY', 'http://localhost:3000/auth'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
