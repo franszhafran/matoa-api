@@ -28,6 +28,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'frontend_url' => env('APP_FE_URL', 'http://localhost:3000/auth'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

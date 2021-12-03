@@ -82,7 +82,7 @@ class Auth0Controller extends Controller
             'https://%s/v2/logout?client_id=%s&returnTo=%s',
             config('laravel-auth0.domain'),
             config('laravel-auth0.client_id'),
-            config('app.logout_callback_url')
+            'http://localhost:3000/'
         );
 
         return Redirect::intended($logoutUrl);
