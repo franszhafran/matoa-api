@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\User;
 use App\Services\JWTService;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Auth0\Login\Contract\Auth0UserRepository;
+use Illuminate\Support\Facades\DB;
 
 class Auth0Controller extends Controller
 {
@@ -56,13 +58,25 @@ class Auth0Controller extends Controller
 
             $userDB = User::where('email', $user->getUserInfo()['email'])->first();
             if(!$userDB) {
-                $userDB = User::create([
-                    "name" => $user->getUserInfo()['name'],
-                    "email" => $user->getUserInfo()['email'],
-                    "point" => 0,
-                    "link_avatar" => $user->getUserInfo()['picture'],
-                ]);
-                $userDB->save();
+                try {
+                    DB::beginTransaction();
+                    $userDB = User::create([
+                        "name" => $user->getUserInfo()['name'],
+                        "email" => $user->getUserInfo()['email'],
+                        "point" => 0,
+                        "link_avatar" => $user->getUserInfo()['picture'],
+                    ]);
+                    $userDB->save();
+                    Cart::create([
+                        "id" => $userDB->id,
+                        "products_id" => [],
+                    ]);
+                    DB::commit();
+                } catch(\Exception $e) {
+                    DB::rollBack();
+                    echo $e->getMessage();
+                    return;
+                }
             }
             $url = config('app.frontend_url');
             $token = $this->JWTService->createToken($userDB->id);
