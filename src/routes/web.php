@@ -27,6 +27,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/transactions', [TransactionController::class, 'listAdmin'])->name('listAdmin');
     Route::post('/transactions', [TransactionController::class, 'confirm'])->name('confirm');
+    Route::post('/transactions/tracking', [TransactionController::class, 'tracking'])->name('tracking');
 });
 
 Route::prefix('profile')->name('profile.')->middleware('auth0')->group(function () {
@@ -44,6 +45,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth0')->group(function 
 Route::prefix('customer')->name('customer.')->middleware('auth0')->group(function () {
     Route::get('/transactions', [TransactionController::class, 'list'])->name('list');
     Route::get('/transactions/{id}', [TransactionController::class, 'detail'])->name('detail');
+    Route::post('/transactions/payment_proof', [TransactionController::class, 'uploadProof'])->name('uploadProof');
 });
 
 Route::prefix('auth0')->name('auth0.')->group(function () {

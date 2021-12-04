@@ -55,9 +55,9 @@ trait ApiResponse
         if($e instanceof ConnectionException) return $this->sendError('Server sedang sibuk #1001', 'Error', 500);
 
         if (env('APP_DEBUG')) {
-            return $this->sendError($e->getMessage(), 'Error', 200);
+            return $this->sendError($e->getMessage(), 'Error', 500);
         }
 
-        return $this->sendError('Internal Server Error', 'Error', 200);
+        return $this->sendError('Internal Server Error', 'Error', 500);
     }
 }
