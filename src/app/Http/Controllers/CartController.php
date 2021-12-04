@@ -30,7 +30,25 @@ class CartController extends Controller
 
             if($cart instanceof Cart) {
                 try {
-                    $cart->products_id[] = $request->product_id;
+                    $cart->addProduct($request->product_id, $request->quantity);
+                    $cart->save();
+                    return $this->sendOk();
+                } catch (\Exception $e) {
+                    return $this->handleException($e);
+                }
+            }
+        } catch (\Exception $e) {
+            return $this->handleException($e);
+        }
+    }
+
+    public function setCart(Request $request) {
+        try {
+            $cart = Cart::where('id', $request->user->id)->firstOrFail();
+
+            if($cart instanceof Cart) {
+                try {
+                    $cart->setProduct($request->product_id, $request->quantity);
                     $cart->save();
                     return $this->sendOk();
                 } catch (\Exception $e) {

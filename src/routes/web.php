@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth0Controller;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::prefix('profile')->name('profile.')->middleware('auth0')->group(function () {
     Route::get('/', [CustomerController::class, 'profile'])->name('profile');
+    
+    Route::get('/cart', [CartController::class, 'detail'])->name('detail');
+    Route::post('/cart', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::post('/cart-set', [CartController::class, 'setCart'])->name('setCart');
 });
 
 Route::prefix('auth0')->name('auth0.')->group(function () {

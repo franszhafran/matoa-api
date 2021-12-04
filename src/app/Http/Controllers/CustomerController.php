@@ -15,4 +15,12 @@ class CustomerController extends Controller
     public function profile(Request $request) {
         return $this->sendData($request->user->toArray());
     }
+
+    public function update(Request $request) {
+        $user = $request->user;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->name = $request->name;
+        return $this->sendData($request->user->toArray());
+    }
 }

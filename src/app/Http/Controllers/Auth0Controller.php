@@ -56,6 +56,8 @@ class Auth0Controller extends Controller
                 $user = $auth0User;
             }
 
+            dd($user);
+
             $userDB = User::where('email', $user->getUserInfo()['email'])->first();
             if(!$userDB) {
                 try {
@@ -63,7 +65,8 @@ class Auth0Controller extends Controller
                     $userDB = User::create([
                         "name" => $user->getUserInfo()['name'],
                         "email" => $user->getUserInfo()['email'],
-                        "point" => 0,
+                        "first_name" => $user->getUserInfo()['given_name'],
+                        "last_name" => $user->getUserInfo()['family_name'],
                         "link_avatar" => $user->getUserInfo()['picture'],
                     ]);
                     $userDB->save();
