@@ -27,6 +27,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::prefix('profile')->name('profile.')->middleware('auth0')->group(function () {
     Route::get('/', [CustomerController::class, 'profile'])->name('profile');
+    Route::post('/', [CustomerController::class, 'update'])->name('updateProfile');
     
     Route::get('/cart', [CartController::class, 'detail'])->name('detail');
     Route::post('/cart', [CartController::class, 'addToCart'])->name('addToCart');
