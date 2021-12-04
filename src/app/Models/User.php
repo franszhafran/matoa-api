@@ -12,4 +12,8 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $guarded = [];
+
+    public function transactions() {
+        return $this->hasMany(Transaction::class, "user_id", "id");
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth0Controller;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/{id}', [ProductController::class, 'detail'])->name('detail');
         Route::post('/', [ProductController::class, 'store'])->name('store');
     });
+
+    Route::get('/transactions', [TransactionController::class, 'listAdmin'])->name('listAdmin');
+    Route::post('/transactions', [TransactionController::class, 'confirm'])->name('confirm');
 });
 
 Route::prefix('profile')->name('profile.')->middleware('auth0')->group(function () {
@@ -32,6 +36,14 @@ Route::prefix('profile')->name('profile.')->middleware('auth0')->group(function 
     Route::get('/cart', [CartController::class, 'detail'])->name('detail');
     Route::post('/cart', [CartController::class, 'addToCart'])->name('addToCart');
     Route::post('/cart-set', [CartController::class, 'setCart'])->name('setCart');
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+
+    
+});
+
+Route::prefix('customer')->name('customer.')->middleware('auth0')->group(function () {
+    Route::get('/transactions', [TransactionController::class, 'list'])->name('list');
+    Route::get('/transactions/{id}', [TransactionController::class, 'detail'])->name('detail');
 });
 
 Route::prefix('auth0')->name('auth0.')->group(function () {
