@@ -17,10 +17,15 @@ class CustomerController extends Controller
     }
 
     public function update(Request $request) {
-        $user = $request->user;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->name = $request->name;
-        return $this->sendData($request->user->toArray());
+        try {
+            $user = $request->user;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->name = $request->name;
+            $user->save();
+            return $this->sendOk();
+        } catch (\Exception $e) {
+            return $this->handleException($e);
+        }
     }
 }
