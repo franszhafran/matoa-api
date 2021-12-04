@@ -56,8 +56,6 @@ class Auth0Controller extends Controller
                 $user = $auth0User;
             }
 
-            dd($user);
-
             $userDB = User::where('email', $user->getUserInfo()['email'])->first();
             if(!$userDB) {
                 try {
