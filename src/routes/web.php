@@ -27,8 +27,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/transactions', [TransactionController::class, 'listAdmin'])->name('listAdmin');
     Route::post('/transactions', [TransactionController::class, 'confirm'])->name('confirm');
+    Route::post('/contents', [CustomerController::class, 'setHome'])->name('setHome');
     Route::post('/transactions/tracking', [TransactionController::class, 'tracking'])->name('tracking');
 });
+
+Route::get('/contents', [CustomerController::class, 'home'])->name('home');
 
 Route::prefix('profile')->name('profile.')->middleware('auth0')->group(function () {
     Route::get('/', [CustomerController::class, 'profile'])->name('profile');
@@ -38,8 +41,6 @@ Route::prefix('profile')->name('profile.')->middleware('auth0')->group(function 
     Route::post('/cart', [CartController::class, 'addToCart'])->name('addToCart');
     Route::post('/cart-set', [CartController::class, 'setCart'])->name('setCart');
     Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
-
-    
 });
 
 Route::prefix('customer')->name('customer.')->middleware('auth0')->group(function () {
